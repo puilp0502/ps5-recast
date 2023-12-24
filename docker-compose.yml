@@ -1,0 +1,23 @@
+version: '3'
+services:
+  nginx-rtmp:
+    build: nginx-rtmp
+    volumes:
+      - ./shared:/shared
+      - tmp:/tmp
+      - ./nginx-rtmp/index.html:/var/www/html/index.html
+    ports:
+      - "1935:1935"
+      - "8080:8080"
+  rtmp-to-hls:
+    build: rtmp-to-hls
+    stop_signal: SIGKILL
+    environment:
+      - RTMP_HOST=nginx-rtmp
+    volumes:
+      - ./shared:/shared
+      - tmp:/tmp
+
+volumes:
+  tmp:
+
