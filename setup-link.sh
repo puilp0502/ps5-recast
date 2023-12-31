@@ -4,6 +4,7 @@ source ./config.env
 
 DEV_IP=$(ip -f inet addr show $DEV | sed -En -e 's/.*inet ([0-9.]+).*/\1/p')
 if [[ "$DEV_IP" == "" ]]; then
+	echo "ip not set; setting to $DEVADDR/24"
 	sudo ip addr add $DEVADDR/24 dev $DEV
 else
 	echo "IP already set ($DEV_IP)"
